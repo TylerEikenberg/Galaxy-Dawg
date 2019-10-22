@@ -20,11 +20,13 @@ function preload() {
 
 //function create holds all the game logic
 function create() {
-  game.physics.startSystem(Phaser.Physics.ARCADE);
+  game.physics.startSystem(Phaser.Physics.ARCADE); //add physics engine
   //set player to playerShip
-  player = game.add.image(game.canvas.width / 2, game.canvas.height - 100, 'playerShip');
-  game.physics.arcade.enable(player, Phaser.Physics.ARCADE);
+  //set player to game.add.sprite to enable body physics
+  player = game.add.sprite(game.canvas.width / 2, game.canvas.height - 100, 'playerShip');
+  game.physics.arcade.enable(player, Phaser.Physics.ARCADE); //set player physics
   console.log(2);
+  player.body.velocity.set(150, 150);
 }
 
 function update() {}
