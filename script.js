@@ -10,23 +10,43 @@ const game = new Phaser.Game(400, 730, Phaser.AUTO, 'game-wrapper', {
 });
 
 let player;
-let enemies = [];
+let playerShots = []; //to hold players laser shots
+let enemies = []; //to hold all the enemies
 
 //preload function preloads all the games assets
 function preload() {
+  let leftKey;
+  let rightKey;
+  let spaceKey;
   //player ship
   game.load.image('playerShip', 'assets/spaceship.png');
   //enemy ship
   game.load.image('enemyShip', 'assets/enemy.png');
+  //player shot
+  game.load.image('shot', 'assets/shot.png');
   console.log(1);
 }
 
 /*****************************************
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  *  function create holds all the game logic
  * */
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE); //add physics engine
+
+  //set keys to keyboard input
+  game.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+  game.rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+  game.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   //set player to playerShip
   //set player to game.add.sprite to enable body physics
@@ -39,8 +59,14 @@ function create() {
   player.x = game.input.x || game.world.width * 0.5;
   player.body.velocity.x = 200; //set default x velocity to 150 so ship moves on it own
 
-  //set variable cursors to keyboard input
-  cursors = game.input.keyboard.createCursorKeys();
+  /**
+   * create player laser bullet
+   */
+
+  playerShots[0] = game.add.sprite(game.canvas.width / 2, game.canvas.height - 100, 'shot');
+  game.physics.arcade.enable(playerShots[0], Phaser.Physics.ARCADE);
+  playerShots[0].body.collideWorldBounds = true;
+  playerShots[0].anchor.set(player.position.x, player.position.y);
 
   /**
    * Create enemies
@@ -57,6 +83,7 @@ function create() {
     enemy = game.add.sprite(game.canvas.width - 300 * i, game.canvas.height - 600, 'enemyShip');
     game.physics.arcade.enable(enemy, Phaser.Physics.ARCADE);
     enemy.body.collideWorldBounds = true;
+    enemy.body.velocity.x = 100;
     enemies[i] = enemy;
     console.log;
   }
@@ -67,17 +94,27 @@ function create() {
 }
 
 /*****************************************
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  *  update function holds code on updating game objects
  * */
 
 function update() {
-  if (cursors.left.isDown) {
+  if (game.leftKey.isDown) {
     player.body.velocity.x = -200;
     // player.animations.play('left');
-  } else if (cursors.right.isDown) {
+  } else if (game.rightKey.isDown) {
     player.body.velocity.x = 200;
     // player.animations.play('right');
-  } else {
-    // player.animations.stop();
+    //   } else if (cursors.space.isDown) {
+    //     playerShots[0].anchor.set(player.position.x, player.position.y);
+    //     // player.animations.stop();
+    //   }
   }
 }
