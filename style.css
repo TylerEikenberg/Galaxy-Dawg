@@ -20,6 +20,11 @@ body {
     position: relative;
     border: 5px solid black;
   }
+  .score{
+      position: absolute;
+      color: white;
+      bottom: 90%;
+  }
 
   @media only screen and (min-width: 768px){
     .desktop-margins{

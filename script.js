@@ -14,6 +14,8 @@ let laser; //to hold players laser shots
 let lasers;
 let laserTime = 0;
 let enemies = []; //to hold all the enemies
+let score = 0;
+const scoreText = document.querySelector('.score');
 
 /******************
  *
@@ -182,4 +184,10 @@ function fireLaser() {
 function destroyEnemy(enemy, laser) {
   enemy.kill();
   laser.kill();
+  increaseScore();
+}
+
+function increaseScore() {
+  score += 50;
+  scoreText.innerHTML = `Score: ${score}`;
 }
