@@ -68,7 +68,7 @@ function create() {
   lasers = game.add.group();
   lasers.enableBody = true;
   game.physics.arcade.enable(lasers, Phaser.Physics.ARCADE);
-  lasers.createMultiple(5, 'laser');
+  lasers.createMultiple(100, 'laser');
   lasers.setAll('anchor.x', 0.5);
   lasers.setAll('anchor.y', 0.5);
   lasers.setAll('scale.x', 0.5);
@@ -117,22 +117,36 @@ function update() {
   if (game.leftKey.isDown) {
     player.body.velocity.x = -200;
     fireLaser();
+    // if (checkOverlap(lasers, enemy[0])) {
+    //   enemy[0].kill;
+    // }
     // player.animations.play('left');
   } else if (game.rightKey.isDown) {
     player.body.velocity.x = 200;
     fireLaser();
+    // if (checkOverlap(lasers, enemy[0])) {
+    //   enemy[0].kill;
+    // }
     // player.animations.play('right');
   }
 }
 
+/**
+ * function fireLaser
+ * first if statement checks if previous laser fired time has elapsed enough
+ * laser is set to first laser in lasers group
+ * second if condition sets position of laser to player body
+ * velocity is set to shoot out laser
+ * set laserTime to current time + 200 so player cannot shoot laser rapidly
+ */
 function fireLaser() {
   if (game.time.now > laserTime) {
     laser = lasers.getFirstExists(false);
     if (laser) {
-      laser.reset(player.x, player.y);
-      laser.body.velocity = -100;
+      laser.reset(player.x + 5, player.y - 80);
+      laser.body.velocity.y = -300;
 
-      laserTime = game.time.now + 900;
+      laserTime = game.time.now + 200;
     }
   }
 }
