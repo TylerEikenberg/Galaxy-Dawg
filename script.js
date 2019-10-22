@@ -66,10 +66,8 @@ function create() {
    */
 
   lasers = game.add.group();
-  if (game.physics.arcade.enable(lasers, Phaser.Physics.ARCADE)) {
-    console.log('true');
-  }
-
+  lasers.enableBody = true;
+  game.physics.arcade.enable(lasers, Phaser.Physics.ARCADE);
   lasers.createMultiple(5, 'laser');
   lasers.setAll('anchor.x', 0.5);
   lasers.setAll('anchor.y', 0.5);
