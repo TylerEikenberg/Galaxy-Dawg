@@ -1,0 +1,30 @@
+body {
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font: 16px sans-serif;
+    margin: -0.10%;
+  }
+
+#game-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222;
+    width: 400px;
+    height: 730px;
+    position: relative;
+    border: 5px solid black;
+  }
+
+  @media only screen and (min-width: 768px){
+    .desktop-margins{
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+
+  }
