@@ -25,7 +25,7 @@ function preload() {
   //enemy ship
   game.load.image('enemyShip', 'assets/enemy.png');
   //player shot
-  game.load.image('shot', 'assets/shot.png');
+  game.load.image('laser', 'assets/shot.png');
   console.log(1);
 }
 
@@ -65,9 +65,18 @@ function create() {
    * create player laser bullet
    */
 
-  //   lasers = game.add.group();
-  //   lasers.physicsBodyType = Phaser.Physics.ARCADE;
-  //   lasers.enable.body = true;
+  lasers = game.add.group();
+  if (game.physics.arcade.enable(lasers, Phaser.Physics.ARCADE)) {
+    console.log('true');
+  }
+
+  lasers.createMultiple(5, 'laser');
+  lasers.setAll('anchor.x', 0.5);
+  lasers.setAll('anchor.y', 0.5);
+  lasers.setAll('scale.x', 0.5);
+  lasers.setAll('scale.y', 0.5);
+  lasers.setAll('outOfBoundsKill', true);
+  lasers.setAll('checkWorldBounds', true);
 
   /**
    * Create enemies
@@ -109,18 +118,23 @@ function create() {
 function update() {
   if (game.leftKey.isDown) {
     player.body.velocity.x = -200;
+    fireLaser();
     // player.animations.play('left');
   } else if (game.rightKey.isDown) {
     player.body.velocity.x = 200;
-    // player.animations.play('right');
-  } else if (game.spaceKey.isDown) {
     fireLaser();
-    // playerShots[0].anchor.set(player.position.x, player.position.y);
+    // player.animations.play('right');
   }
 }
 
 function fireLaser() {
-  if (game.time.now > bulletTime) {
-    bullet = bullets.getFirstExists(false);
+  if (game.time.now > laserTime) {
+    laser = lasers.getFirstExists(false);
+    if (laser) {
+      laser.reset(player.x, player.y);
+      laser.body.velocity = -100;
+
+      laserTime = game.time.now + 900;
+    }
   }
 }
