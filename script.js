@@ -10,7 +10,9 @@ const game = new Phaser.Game(400, 730, Phaser.AUTO, 'game-wrapper', {
 });
 
 let player;
-let playerShots = []; //to hold players laser shots
+let laser; //to hold players laser shots
+let lasers;
+let laserTime = 0;
 let enemies = []; //to hold all the enemies
 
 //preload function preloads all the games assets
@@ -63,10 +65,9 @@ function create() {
    * create player laser bullet
    */
 
-  playerShots[0] = game.add.sprite(game.canvas.width / 2, game.canvas.height - 100, 'shot');
-  game.physics.arcade.enable(playerShots[0], Phaser.Physics.ARCADE);
-  playerShots[0].body.collideWorldBounds = true;
-  playerShots[0].anchor.set(player.position.x, player.position.y);
+  //   lasers = game.add.group();
+  //   lasers.physicsBodyType = Phaser.Physics.ARCADE;
+  //   lasers.enable.body = true;
 
   /**
    * Create enemies
@@ -112,9 +113,14 @@ function update() {
   } else if (game.rightKey.isDown) {
     player.body.velocity.x = 200;
     // player.animations.play('right');
-    //   } else if (cursors.space.isDown) {
-    //     playerShots[0].anchor.set(player.position.x, player.position.y);
-    //     // player.animations.stop();
-    //   }
+  } else if (game.spaceKey.isDown) {
+    fireLaser();
+    // playerShots[0].anchor.set(player.position.x, player.position.y);
+  }
+}
+
+function fireLaser() {
+  if (game.time.now > bulletTime) {
+    bullet = bullets.getFirstExists(false);
   }
 }
