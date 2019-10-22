@@ -17,6 +17,7 @@ let enemies = []; //to hold all the enemies
 
 //preload function preloads all the games assets
 function preload() {
+  let mouseClick;
   let leftKey;
   let rightKey;
   let spaceKey;
@@ -44,8 +45,10 @@ function preload() {
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE); //add physics engine
+  game.input.mouse.capture = true;
 
   //set keys to keyboard input
+  game.mouseClick = game.input.pointer1;
   game.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
   game.rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
   game.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -114,21 +117,30 @@ function create() {
  * */
 
 function update() {
-  if (game.leftKey.isDown) {
+  if (game.mouseClick.isDown) {
     player.body.velocity.x = -200;
-    fireLaser();
-    // if (checkOverlap(lasers, enemy[0])) {
-    //   enemy[0].kill;
-    // }
-    // player.animations.play('left');
-  } else if (game.rightKey.isDown) {
-    player.body.velocity.x = 200;
-    fireLaser();
-    // if (checkOverlap(lasers, enemy[0])) {
-    //   enemy[0].kill;
-    // }
-    // player.animations.play('right');
+    console.log('click');
+    if (player.body.velocity > 0) {
+      player.body.velocity.x = -200;
+    } else if (player.body.velocity < 0) {
+      player.body.velocity.x = 200;
+    }
   }
+  //   if (game.leftKey.isDown) {
+  //     player.body.velocity.x = -200;
+  //     fireLaser();
+  //     // if (checkOverlap(lasers, enemy[0])) {
+  //     //   enemy[0].kill;
+  //     // }
+  //     // player.animations.play('left');
+  //   } else if (game.rightKey.isDown) {
+  //     player.body.velocity.x = 200;
+  //     fireLaser();
+  //     // if (checkOverlap(lasers, enemy[0])) {
+  //     //   enemy[0].kill;
+  //     // }
+  //     // player.animations.play('right');
+  //   }
 }
 
 /**
