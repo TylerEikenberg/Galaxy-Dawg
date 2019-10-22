@@ -30,13 +30,13 @@ function create() {
   player.anchor.set(0.5, 1); //position players anchor point to the middle of sprite
   player.body.immovable = true; //player wont move upon collision
   player.x = game.input.x || game.world.width * 0.5;
+  player.body.velocity.x = 150; //set default x velocity to 150 so ship moves on it own
 
   cursors = game.input.keyboard.createCursorKeys();
 }
 
+//update function holds code on updating game objects
 function update() {
-  player.body.velocity.x = 0;
-
   if (cursors.left.isDown) {
     player.body.velocity.x = -200;
     player.animations.play('left');
