@@ -115,32 +115,40 @@ function create() {
  *
  *  update function holds code on updating game objects
  * */
-
+let playerVelocity = 200;
 function update() {
-  if (game.mouseClick.isDown) {
-    player.body.velocity.x = -200;
-    console.log('click');
-    if (player.body.velocity > 0) {
-      player.body.velocity.x = -200;
-    } else if (player.body.velocity < 0) {
-      player.body.velocity.x = 200;
-    }
-  }
-  //   if (game.leftKey.isDown) {
-  //     player.body.velocity.x = -200;
-  //     fireLaser();
-  //     // if (checkOverlap(lasers, enemy[0])) {
-  //     //   enemy[0].kill;
-  //     // }
-  //     // player.animations.play('left');
-  //   } else if (game.rightKey.isDown) {
-  //     player.body.velocity.x = 200;
-  //     fireLaser();
-  //     // if (checkOverlap(lasers, enemy[0])) {
-  //     //   enemy[0].kill;
-  //     // }
-  //     // player.animations.play('right');
+  /**
+   * COME BACK TO THIS LATER
+   * CHANGE INPUT TO MOUSE CLICK ONLY
+   */
+  //   if (game.mouseClick.isDown) {
+  //     console.log('click');
+  //     player.body.velocity.x = -player.body.velocity.x * 1;
+  //     if (player.body.velocity > 0) {
+  //       player.body.velocity.x = -200;
+  //     } else if (player.body.velocity < 0) {
+  //       player.body.velocity.x = 200;
+  //     }
   //   }
+
+  if (game.leftKey.isDown) {
+    player.body.velocity.x = -200;
+    fireLaser();
+    // if (checkOverlap(lasers, enemy[0])) {
+    //   enemy[0].kill;
+    // }
+    // player.animations.play('left');
+  } else if (game.rightKey.isDown) {
+    player.body.velocity.x = 200;
+    fireLaser();
+    // if (checkOverlap(lasers, enemy[0])) {
+    //   enemy[0].kill;
+    // }
+    // player.animations.play('right');
+  }
+
+  //add collision detection for ships and bullets
+  game.physics.arcade.collide(lasers, enemies, destroyEnemy);
 }
 
 /**
@@ -156,9 +164,14 @@ function fireLaser() {
     laser = lasers.getFirstExists(false);
     if (laser) {
       laser.reset(player.x + 5, player.y - 80);
-      laser.body.velocity.y = -300;
+      laser.body.velocity.y = -400;
 
       laserTime = game.time.now + 200;
     }
   }
+}
+
+function destroyEnemy(enemy, laser) {
+  enemy.kill();
+  laser.kill();
 }
