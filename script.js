@@ -14,6 +14,7 @@ let laser; //to hold players laser shots
 let lasers;
 let laserTime = 0;
 let enemies; //to hold all the enemies
+let enemiesRight;
 let score = 0;
 const scoreText = document.querySelector('.score');
 let health = 100;
@@ -31,6 +32,7 @@ function preload() {
   game.load.image('playerShip', 'assets/spaceship.png');
   //enemy ship
   game.load.image('enemyShip', 'assets/enemy.png');
+  game.load.image('enemyShip2', 'assets/enemy.png');
   //player shot
   game.load.image('laser', 'assets/shot.png');
   console.log(1);
@@ -112,7 +114,24 @@ function create() {
   //   game.time.events.add(100, deployEnemyShips);
 
   game.time.events.loop(3000, function() {
-    deployEnemyShips();
+    deployEnemyShipsLeft();
+  });
+
+  enemiesRight = game.add.group();
+  enemiesRight.enableBody = true;
+  game.physics.arcade.enable(enemiesRight, Phaser.Physics.ARCADE);
+  enemiesRight.createMultiple(5, 'enemyShip2');
+  enemiesRight.setAll('anchor.x', 0.5);
+  enemiesRight.setAll('anchor.y', 0.5);
+  //   enemies.setAll('scale.x', 0.5);
+  //   enemies.setAll('scale.y', 0.5);
+  enemiesRight.setAll('outOfBoundsKill', true);
+  enemiesRight.setAll('checkWorldBounds', true);
+  enemiesRight.setAll('angle', 180);
+  game.time.events.add(3000, function() {
+    game.time.events.loop(5000, function() {
+      deployEnemyShipsRight();
+    });
   });
   console.log('ships deployed');
 }
@@ -161,8 +180,10 @@ function update() {
 
   //add collision detection for enemyShips and bullets
   game.physics.arcade.collide(lasers, enemies, destroyEnemy);
+  game.physics.arcade.collide(lasers, enemiesRight, destroyEnemy);
   //add collision detection for enemyShips and playerShip
   game.physics.arcade.collide(enemies, player, takeDamage);
+  game.physics.arcade.collide(enemiesRight, player, takeDamage);
   if (health === 0) {
     killPlayer();
   }
@@ -192,7 +213,7 @@ function fireLaser() {
  *
  * Function deployEnemies adds enemies to the game space
  */
-function deployEnemyShips() {
+function deployEnemyShipsLeft() {
   //   const MIN_ENEMY_SPACING = 300;
   //   const MAX_ENEMY_SPACING = 500;
   const ENEMY_SPEED = 300;
@@ -208,7 +229,23 @@ function deployEnemyShips() {
     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
     // };
     //randomly adds new enemy ships
-    game.time.events.add(300, deployEnemyShips);
+    game.time.events.add(300, deployEnemyShipsLeft);
+  }
+}
+
+function deployEnemyShipsRight() {
+  const ENEMY_SPEED = 300;
+  let enemy2 = enemiesRight.getFirstExists(false);
+  if (enemy2) {
+    enemy2.reset(300, 0);
+    enemy2.body.velocity.x = 0;
+    enemy2.body.velocity.y = ENEMY_SPEED;
+    enemy2.body.drag.x = 300;
+    // enemy.update = function() {
+    //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
+    // };
+    //randomly adds new enemy ships
+    game.time.events.add(300, deployEnemyShipsRight);
   }
 }
 
