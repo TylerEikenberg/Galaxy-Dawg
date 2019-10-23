@@ -33,6 +33,12 @@ body {
     font-family: 'Press Start 2P', cursive;
     display: none;
   }
+  #health{
+    position: absolute;
+    color: white;
+    bottom: 1%;
+    font-family: 'Press Start 2P', cursive;
+  }
 
   @media only screen and (min-width: 768px){
     .desktop-margins{

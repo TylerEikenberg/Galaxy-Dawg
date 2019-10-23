@@ -16,7 +16,7 @@ let laserTime = 0;
 let enemies; //to hold all the enemies
 let score = 0;
 const scoreText = document.querySelector('.score');
-let health = 3;
+let health = 100;
 
 /******************
  *
@@ -224,10 +224,11 @@ function increaseScore() {
 }
 
 //Function takeDamage reduces the players health on collision with enemy
+const healthText = document.querySelector('#health');
 function takeDamage(player, enemy) {
   enemy.kill();
-  health--;
-  console.log(health);
+  health -= 50;
+  healthText.innerHTML = `Health: ${health}`;
 }
 
 const gameOver = document.querySelector('.gameover');
