@@ -14,11 +14,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #222;
+    background: blue;
     width: 400px;
     height: 730px;
     position: relative;
-    border: 5px solid black;
+    border: 5px solid white;
   }
   .score{
       position: absolute;
@@ -40,10 +40,61 @@ body {
     font-family: 'Press Start 2P', cursive;
   }
 
+  
+
   @media only screen and (min-width: 768px){
     .desktop-margins{
-        margin-left: 25%;
-        margin-right: 25%;
+        margin-top: 5%;
+        margin-left: 19%;
+        background: blueviolet
+        
+    }
+    .outside-game{
+      margin: auto;
+      position: absolute;
+      padding-left: 20%;
+      width: 42%;
+      background: black;
+    }
+    .character-image{
+        position: absolute;
+        right: 70%;
+        margin-top: 8%;
+        height: 300px;
+        width: 200px;
+        border: 2px solid white;
+        background-image: url('assets/commanderplaceholder.png');
+        background-size: cover;;
+    }
+    .character-text{
+        position: absolute;
+        width: 110%;
+        top: 300px;
+        color: white;
+        font-family: 'Press Start 2P', cursive;
+        line-height: 1.5em;
+    }
+
+    .player-image{
+        position: absolute;
+        left: 70%;
+        margin-top: 8%;
+        height: 300px;
+        width: 200px;
+        border: 2px solid white;
+        background-image: url('assets/placeholderdog.png');
+        background-size: cover;;
+    }
+    .player-text{
+        position: absolute;
+        width: 110%;
+        top: 300px;
+        color: white;
+        font-family: 'Press Start 2P', cursive;
+        line-height: 1.5em;
+    }
+    .display-none{
+        
     }
 
   }

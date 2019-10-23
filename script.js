@@ -10,6 +10,7 @@ const game = new Phaser.Game(400, 730, Phaser.AUTO, 'game-wrapper', {
 });
 
 let player;
+let background;
 let laser; //to hold players laser shots
 let lasers;
 let laserTime = 0;
@@ -28,6 +29,7 @@ function preload() {
   let leftKey;
   let rightKey;
   let spaceKey;
+  game.load.image('background', 'assets/spacebg.gif');
   //player ship
   game.load.image('playerShip', 'assets/spaceship.png');
   //enemy ship
@@ -55,6 +57,9 @@ function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE); //add physics engine
   //   game.input.mouse.capture = true; ADD CLICK FUNCTIONALITY LATER *********
 
+  background = game.add.tileSprite(0, 0, 1000, 600, 'background');
+  background.scale.x = 1;
+  background.scale.y = 2;
   //set keys to keyboard input
   //   game.mouseClick = game.input.pointer1;
   game.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -187,6 +192,8 @@ function update() {
   if (health === 0) {
     killPlayer();
   }
+
+  background.tilePosition.y += 1;
 }
 
 /*********************
