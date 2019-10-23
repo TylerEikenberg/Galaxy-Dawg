@@ -39,6 +39,9 @@ body {
     bottom: 1%;
     font-family: 'Press Start 2P', cursive;
   }
+  .display-none{
+    display: none;
+}
 
   
 
@@ -67,6 +70,7 @@ body {
         background-size: cover;;
     }
     .character-text{
+        display: initial; 
         position: absolute;
         width: 110%;
         top: 300px;
@@ -83,9 +87,14 @@ body {
         width: 200px;
         border: 2px solid white;
         background-image: url('assets/placeholderdog.png');
-        background-size: cover;;
+        background-size: cover;
+    }
+    .saturate{
+        filter: saturate(6000%);
+        
     }
     .player-text{
+        display: initial; 
         position: absolute;
         width: 110%;
         top: 300px;
@@ -93,8 +102,6 @@ body {
         font-family: 'Press Start 2P', cursive;
         line-height: 1.5em;
     }
-    .display-none{
-        
-    }
+    
 
   }

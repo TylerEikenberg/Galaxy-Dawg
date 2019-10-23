@@ -194,6 +194,14 @@ function update() {
   }
 
   background.tilePosition.y += 1;
+  let j = 0;
+  //update captain dialogue for score % 2500 = 0;
+  if (score % 1000 === 0 && score !== 0 && j != 1) {
+    const captainText = document.querySelector('.character-text');
+    captainText.innerHTML = newPhrase();
+
+    console.log(j);
+  }
 }
 
 /*********************
@@ -231,7 +239,6 @@ function deployEnemyShipsLeft() {
     enemy.body.velocity.x = 0;
     enemy.body.velocity.y = ENEMY_SPEED;
     enemy.body.drag.x = 100;
-    console.log(enemy);
     // enemy.update = function() {
     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
     // };
@@ -276,6 +283,19 @@ function increaseScore() {
 //Function takeDamage reduces the players health on collision with enemy
 const healthText = document.querySelector('#health');
 function takeDamage(player, enemy) {
+  const dogImage = document.querySelector('.player-image');
+  dogImage.classList.add('saturate');
+  setInterval(function() {
+    dogImage.classList.remove('saturate');
+  }, 100);
+  setInterval(function() {
+    dogImage.classList.add('saturate');
+  }, 200);
+  setInterval(function() {
+    dogImage.classList.remove('saturate');
+  }, 100);
+
+  console.log(dogImage);
   enemy.kill();
   health -= 50;
   healthText.innerHTML = `Health: ${health}`;
@@ -286,4 +306,12 @@ const gameOver = document.querySelector('.gameover');
 function killPlayer() {
   player.kill();
   gameOver.style.display = 'initial';
+}
+
+//function new phrase returns a random phrase
+function newPhrase() {
+  const phrases = ['GOOD SHOOTING, PUP!', 'MORE ENEMIES INCOMING!', 'WHOA! KEEP IT UP!', 'THATS A GOOD BOY!'];
+
+  var returnPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+  return returnPhrase;
 }
