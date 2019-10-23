@@ -99,7 +99,7 @@ function create() {
   enemies = game.add.group();
   enemies.enableBody = true;
   game.physics.arcade.enable(enemies, Phaser.Physics.ARCADE);
-  enemies.createMultiple(3, 'enemyShip');
+  enemies.createMultiple(10, 'enemyShip');
   enemies.setAll('anchor.x', 0.5);
   enemies.setAll('anchor.y', 0.5);
   //   enemies.setAll('scale.x', 0.5);
@@ -195,10 +195,12 @@ function deployEnemyShips() {
     enemy.body.velocity.x = game.rnd.integerInRange(-300, 300);
     enemy.body.velocity.y = ENEMY_SPEED;
     enemy.body.drag.x = 100;
-    enemy.body;
+    enemy.update = function() {
+      enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
+    };
+    //randomly adds new enemy ships
+    game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), deployEnemyShips);
   }
-
-  game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), deployEnemyShips);
 }
 
 /******************
