@@ -101,6 +101,7 @@ function create() {
   enemies.enableBody = true;
   game.physics.arcade.enable(enemies, Phaser.Physics.ARCADE);
   enemies.createMultiple(5, 'enemyShip');
+  enemies.maxSize = 5;
   enemies.setAll('anchor.x', 0.5);
   enemies.setAll('anchor.y', 0.5);
   //   enemies.setAll('scale.x', 0.5);
@@ -109,7 +110,11 @@ function create() {
   enemies.setAll('checkWorldBounds', true);
   enemies.setAll('angle', 180);
   //   game.time.events.add(100, deployEnemyShips);
-  deployEnemyShips();
+
+  game.time.events.loop(3000, function() {
+    deployEnemyShips();
+  });
+  console.log('ships deployed');
 }
 
 /*****************************************
@@ -198,11 +203,12 @@ function deployEnemyShips() {
     enemy.body.velocity.x = 0;
     enemy.body.velocity.y = ENEMY_SPEED;
     enemy.body.drag.x = 100;
+    console.log(enemy);
     // enemy.update = function() {
     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
     // };
     //randomly adds new enemy ships
-    game.time.events.add(500, deployEnemyShips);
+    game.time.events.add(300, deployEnemyShips);
   }
 }
 
