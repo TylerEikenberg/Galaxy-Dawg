@@ -107,7 +107,7 @@ function create() {
   enemies.setAll('outOfBoundsKill', true);
   enemies.setAll('checkWorldBounds', true);
   enemies.setAll('angle', 180);
-
+  //   game.time.events.add(100, deployEnemyShips);
   deployEnemyShips();
 }
 
@@ -182,8 +182,8 @@ function fireLaser() {
  * Function deployEnemies adds enemies to the game space
  */
 function deployEnemyShips() {
-  const MIN_ENEMY_SPACING = 300;
-  const MAX_ENEMY_SPACING = 500;
+  //   const MIN_ENEMY_SPACING = 300;
+  //   const MAX_ENEMY_SPACING = 500;
   const ENEMY_SPEED = 300;
 
   let enemy = enemies.getFirstExists(false);
