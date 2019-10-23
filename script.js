@@ -16,6 +16,7 @@ let laserTime = 0;
 let enemies; //to hold all the enemies
 let score = 0;
 const scoreText = document.querySelector('.score');
+let health = 3;
 
 /******************
  *
@@ -153,8 +154,13 @@ function update() {
     // player.animations.play('right');
   }
 
-  //add collision detection for ships and bullets
+  //add collision detection for enemyShips and bullets
   game.physics.arcade.collide(lasers, enemies, destroyEnemy);
+  //add collision detection for enemyShips and playerShip
+  game.physics.arcade.collide(enemies, player, takeDamage);
+  if (health === 0) {
+    killPlayer();
+  }
 }
 
 /*********************
@@ -214,4 +220,14 @@ function destroyEnemy(enemy, laser) {
 function increaseScore() {
   score += 50;
   scoreText.innerHTML = `Score: ${score}`;
+}
+
+function takeDamage(player, enemy) {
+  enemy.kill();
+  health--;
+  console.log(health);
+}
+
+function killPlayer() {
+  player.kill();
 }
