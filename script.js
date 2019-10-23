@@ -40,6 +40,8 @@ function preload() {
   game.load.image('laser', 'assets/shot.png');
   //health pickup
   game.load.image('healthPickup', 'assets/health.png');
+  //explosion
+  game.load.spritesheet('explosion', 'assets/explosion3.png', 32, 32);
 }
 
 /*****************************************
@@ -273,6 +275,10 @@ function destroyEnemy(enemy, laser) {
   enemy.kill();
   laser.kill();
   increaseScore();
+  let explosion = game.add.sprite(enemy.x - 10, enemy.y - 10, 'explosion');
+  explosion.scale.set(2);
+  explosion.animations.add('boom');
+  explosion.play('boom', 15, false, true);
 }
 
 //Function increaseScore increass the players score by 50
