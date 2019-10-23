@@ -10,6 +10,7 @@ const game = new Phaser.Game(400, 730, Phaser.AUTO, 'game-wrapper', {
 });
 
 let player;
+let healthPickup;
 let background;
 let laser; //to hold players laser shots
 let lasers;
@@ -37,7 +38,8 @@ function preload() {
   game.load.image('enemyShip2', 'assets/enemy.png');
   //player shot
   game.load.image('laser', 'assets/shot.png');
-  console.log(1);
+  //health pickup
+  game.load.image('healthPickup', 'assets/health.png');
 }
 
 /*****************************************
@@ -118,9 +120,12 @@ function create() {
   enemies.setAll('angle', 180);
   //   game.time.events.add(100, deployEnemyShips);
 
-  game.time.events.loop(3000, function() {
+  setInterval(function() {
     deployEnemyShipsLeft();
-  });
+  }, 1500);
+  //   game.time.events.loop(3000, function() {
+  //     deployEnemyShipsLeft();
+  //   });
 
   enemiesRight = game.add.group();
   enemiesRight.enableBody = true;
@@ -138,7 +143,10 @@ function create() {
       deployEnemyShipsRight();
     });
   });
-  console.log('ships deployed');
+
+  setInterval(function() {
+    healthAppear();
+  }, 3000);
 }
 
 /*****************************************
@@ -170,17 +178,9 @@ function update() {
   if (game.leftKey.isDown) {
     player.body.velocity.x = -200;
     fireLaser();
-    // if (checkOverlap(lasers, enemy[0])) {
-    //   enemy[0].kill;
-    // }
-    // player.animations.play('left');
   } else if (game.rightKey.isDown) {
     player.body.velocity.x = 200;
     fireLaser();
-    // if (checkOverlap(lasers, enemy[0])) {
-    //   enemy[0].kill;
-    // }
-    // player.animations.play('right');
   }
 
   //add collision detection for enemyShips and bullets
@@ -192,6 +192,7 @@ function update() {
   if (health === 0) {
     killPlayer();
   }
+  game.physics.arcade.collide(player, healthPickup, increaseHealth);
 
   background.tilePosition.y += 1;
   let j = 0;
@@ -305,6 +306,7 @@ const gameOver = document.querySelector('.gameover');
 //Function killPlayer removes the player from the game
 function killPlayer() {
   player.kill();
+  laser.kill();
   gameOver.style.display = 'initial';
 }
 
@@ -314,4 +316,21 @@ function newPhrase() {
 
   var returnPhrase = phrases[Math.floor(Math.random() * phrases.length)];
   return returnPhrase;
+}
+
+function healthAppear() {
+  healthPickup = game.add.sprite(200, 80, 'healthPickup');
+  healthPickup.enableBody = true;
+  game.physics.arcade.enable(healthPickup, Phaser.Physics.ARCADE);
+  healthPickup.anchor.set(0.5, 1);
+  healthPickup.body.immovable = true;
+  healthPickup.body.velocity.x = 20;
+  healthPickup.body.velocity.y = 200;
+  healthPickup.game.outOfBoundsKill = false;
+}
+
+function increaseHealth(healthPickup) {
+  healthPickup.kill();
+  health += 100;
+  healthText.innerHTML = `Health: ${health}`;
 }
