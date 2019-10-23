@@ -192,7 +192,7 @@ function update() {
   if (health === 0) {
     killPlayer();
   }
-  game.physics.arcade.collide(player, healthPickup, increaseHealth);
+  game.physics.arcade.collide(healthPickup, player, increaseHealth);
 
   background.tilePosition.y += 1;
   let j = 0;
@@ -323,7 +323,7 @@ function healthAppear() {
   healthPickup.enableBody = true;
   game.physics.arcade.enable(healthPickup, Phaser.Physics.ARCADE);
   healthPickup.anchor.set(0.5, 1);
-  healthPickup.body.immovable = true;
+  healthPickup.body.immovable = false;
   healthPickup.body.velocity.x = 20;
   healthPickup.body.velocity.y = 200;
   healthPickup.game.outOfBoundsKill = false;
@@ -333,4 +333,8 @@ function increaseHealth(healthPickup) {
   healthPickup.kill();
   health += 100;
   healthText.innerHTML = `Health: ${health}`;
+  healthText.classList.add('glowText');
+  setInterval(function() {
+    healthText.classList.remove('glowText');
+  }, 800);
 }

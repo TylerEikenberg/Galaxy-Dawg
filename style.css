@@ -42,6 +42,15 @@ body {
   .display-none{
     display: none;
 }
+.glowText{
+    animation-name: glow;
+    animation-duration: 1s;
+
+}
+@keyframes glow {
+    from {color: white;}
+    to {color: yellow;}
+  }
 
   
 
