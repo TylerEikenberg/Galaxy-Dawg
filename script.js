@@ -56,7 +56,7 @@ function create() {
   //   game.mouseClick = game.input.pointer1;
   game.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
   game.rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-  game.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  //   game.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   //set player to playerShip
   //set player to game.add.sprite to enable body physics
@@ -99,19 +99,16 @@ function create() {
   enemies = game.add.group();
   enemies.enableBody = true;
   game.physics.arcade.enable(enemies, Phaser.Physics.ARCADE);
-  enemies.createMultiple(10, 'enemyShip');
+  enemies.createMultiple(5, 'enemyShip');
   enemies.setAll('anchor.x', 0.5);
   enemies.setAll('anchor.y', 0.5);
   //   enemies.setAll('scale.x', 0.5);
   //   enemies.setAll('scale.y', 0.5);
   enemies.setAll('outOfBoundsKill', true);
   enemies.setAll('checkWorldBounds', true);
+  enemies.setAll('angle', 180);
 
   deployEnemyShips();
-
-  //   enemy = game.add.sprite(game.canvas.width / 2, game.canvas.height - 600, 'enemyShip');
-  //   game.physics.arcade.enable(enemy, Phaser.Physics.ARCADE);
-  //   enemy.body.collideWorldBounds = true;
 }
 
 /*****************************************
@@ -186,20 +183,20 @@ function fireLaser() {
  */
 function deployEnemyShips() {
   const MIN_ENEMY_SPACING = 300;
-  const MAX_ENEMY_SPACING = 1000;
+  const MAX_ENEMY_SPACING = 500;
   const ENEMY_SPEED = 300;
 
   let enemy = enemies.getFirstExists(false);
   if (enemy) {
-    enemy.reset(game.rnd.integerInRange(0, game.width), -20);
-    enemy.body.velocity.x = game.rnd.integerInRange(-300, 300);
+    enemy.reset(100, 0);
+    enemy.body.velocity.x = 0;
     enemy.body.velocity.y = ENEMY_SPEED;
     enemy.body.drag.x = 100;
-    enemy.update = function() {
-      enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
-    };
+    // enemy.update = function() {
+    //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
+    // };
     //randomly adds new enemy ships
-    game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), deployEnemyShips);
+    game.time.events.add(500, deployEnemyShips);
   }
 }
 
