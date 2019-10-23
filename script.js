@@ -217,17 +217,22 @@ function destroyEnemy(enemy, laser) {
   increaseScore();
 }
 
+//Function increaseScore increass the players score by 50
 function increaseScore() {
   score += 50;
   scoreText.innerHTML = `Score: ${score}`;
 }
 
+//Function takeDamage reduces the players health on collision with enemy
 function takeDamage(player, enemy) {
   enemy.kill();
   health--;
   console.log(health);
 }
 
+const gameOver = document.querySelector('.gameover');
+//Function killPlayer removes the player from the game
 function killPlayer() {
   player.kill();
+  gameOver.style.display = 'initial';
 }
