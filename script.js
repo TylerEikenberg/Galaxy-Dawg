@@ -13,7 +13,7 @@ let player;
 let laser; //to hold players laser shots
 let lasers;
 let laserTime = 0;
-let enemies = []; //to hold all the enemies
+let enemies; //to hold all the enemies
 let score = 0;
 const scoreText = document.querySelector('.score');
 
@@ -93,17 +93,21 @@ function create() {
   //give enemy collision
   //make enemy shoot bullet
   //make enemy blow up ONLY WHEN hit by player bullet
+  //create enemy class to define several features ****
+  // enemy movement and make enemy fire at random intervals
 
-  //for loop to create enemies and add them to enemies array
-  for (let i = 0; i <= 2; i++) {
-    enemy = game.add.sprite(game.canvas.width - 200 * i, game.canvas.height - 600, 'enemyShip');
-    game.physics.arcade.enable(enemy, Phaser.Physics.ARCADE);
-    enemy.body.collideWorldBounds = true;
-    enemy.body.velocity.x = 250;
-    enemy.body.bounce.setTo(1, 1);
-    enemies[i] = enemy;
-    console.log;
-  }
+  enemies = game.add.group();
+  enemies.enableBody = true;
+  game.physics.arcade.enable(enemies, Phaser.Physics.ARCADE);
+  enemies.createMultiple(3, 'enemyShip');
+  enemies.setAll('anchor.x', 0.5);
+  enemies.setAll('anchor.y', 0.5);
+  //   enemies.setAll('scale.x', 0.5);
+  //   enemies.setAll('scale.y', 0.5);
+  enemies.setAll('outOfBoundsKill', true);
+  enemies.setAll('checkWorldBounds', true);
+
+  deployEnemyShips();
 
   //   enemy = game.add.sprite(game.canvas.width / 2, game.canvas.height - 600, 'enemyShip');
   //   game.physics.arcade.enable(enemy, Phaser.Physics.ARCADE);
@@ -174,6 +178,27 @@ function fireLaser() {
       laserTime = game.time.now + 200;
     }
   }
+}
+
+/**
+ *
+ * Function deployEnemies adds enemies to the game space
+ */
+function deployEnemyShips() {
+  const MIN_ENEMY_SPACING = 300;
+  const MAX_ENEMY_SPACING = 1000;
+  const ENEMY_SPEED = 300;
+
+  let enemy = enemies.getFirstExists(false);
+  if (enemy) {
+    enemy.reset(game.rnd.integerInRange(0, game.width), -20);
+    enemy.body.velocity.x = game.rnd.integerInRange(-300, 300);
+    enemy.body.velocity.y = ENEMY_SPEED;
+    enemy.body.drag.x = 100;
+    enemy.body;
+  }
+
+  game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), deployEnemyShips);
 }
 
 /******************
