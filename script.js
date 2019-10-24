@@ -19,7 +19,7 @@ let enemies; //to hold all the enemies
 let enemiesDiag;
 let score = 0;
 const scoreText = document.querySelector('.score');
-let health = 100;
+let health = 200;
 
 /******************
  *
@@ -120,7 +120,7 @@ function create() {
 
   setInterval(function() {
     healthAppear();
-  }, 5000);
+  }, 10000);
 }
 
 /*****************************************
@@ -219,7 +219,7 @@ function deployEnemyShips() {
     // };
 
     // game.time.events.add(300, deployEnemyShipsLeft);
-    if (switchDirection === 0 && switchToNewPattern !== 10) {
+    if (switchDirection === 0 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
         enemyXSpawn = 300;
@@ -228,7 +228,7 @@ function deployEnemyShips() {
         // console.log(switchDirection);
         deployEnemyShips();
       });
-    } else if (switchDirection === 1 && switchToNewPattern !== 10) {
+    } else if (switchDirection === 1 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
         enemyXSpawn = 200;
@@ -237,7 +237,7 @@ function deployEnemyShips() {
         // console.log(switchDirection);
         deployEnemyShips();
       });
-    } else if (switchDirection === 2 && switchToNewPattern !== 10) {
+    } else if (switchDirection === 2 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
         enemyXSpawn = 100;
@@ -253,8 +253,7 @@ function deployEnemyShips() {
         // switchDirection = 0;
         // console.log(switchDirection);
         game.time.events.add(2000, function() {
-          switchToNewPattern = 0;
-          console.log(switchToNewPattern);
+          switchToNewPattern = 20;
         });
         console.log('diagonal right side');
         deployEnemyShips();
@@ -262,10 +261,12 @@ function deployEnemyShips() {
     } else if (switchToNewPattern === 20) {
       game.time.events.add(250, function() {
         console.log('diagonal left side');
-        enemyXSpawn = -380;
-        ENEMY_X = -160;
+        enemyXSpawn = 0;
+        ENEMY_X = 80;
         // switchDirection = 0;
-
+        game.time.events.add(2000, function() {
+          switchToNewPattern = 0;
+        });
         deployEnemyShips();
       });
     }
@@ -308,7 +309,7 @@ function takeDamage(player, enemy) {
     dogImage.classList.remove('saturate');
   }, 100);
   enemy.kill();
-  health -= 50;
+  health -= 100;
   healthText.innerHTML = `Health: ${health}`;
 }
 
@@ -336,6 +337,7 @@ function healthAppear() {
   healthPickup.enableBody = true;
   game.physics.arcade.enable(healthPickup, Phaser.Physics.ARCADE);
   healthPickup.anchor.set(0.5, 1);
+  //   healthPickup.scale.set(1.5, 1.5);
   healthPickup.body.immovable = false;
   healthPickup.body.velocity.x = 20;
   healthPickup.body.velocity.y = 200;
@@ -344,7 +346,7 @@ function healthAppear() {
 
 function increaseHealth(healthPickup) {
   healthPickup.kill();
-  health += 100;
+  health += 50;
   healthText.innerHTML = `Health: ${health}`;
   healthText.classList.add('glowText');
   setInterval(function() {
