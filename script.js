@@ -161,7 +161,7 @@ function update() {
   game.physics.arcade.collide(lasers, enemies, destroyEnemy);
   //add collision detection for enemyShips and playerShip
   game.physics.arcade.collide(enemies, player, takeDamage);
-  if (health === 0) {
+  if (health <= 0) {
     killPlayer();
   }
   game.physics.arcade.collide(healthPickup, player, increaseHealth);
@@ -199,7 +199,7 @@ function fireLaser() {
  *
  * Function deployEnemies adds enemies to the game space
  */
-let switchDirection = 0;
+let switchXSpawn = 0;
 let switchToNewPattern = 0;
 let enemyXSpawn = 200;
 let ENEMY_X = 0;
@@ -219,29 +219,29 @@ function deployEnemyShips() {
     // };
 
     // game.time.events.add(300, deployEnemyShipsLeft);
-    if (switchDirection === 0 && switchToNewPattern < 10) {
+    if (switchXSpawn === 0 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
         enemyXSpawn = 200;
-        switchDirection = 1;
+        switchXSpawn = 1;
         switchToNewPattern++;
         // console.log(switchDirection);
         deployEnemyShips();
       });
-    } else if (switchDirection === 1 && switchToNewPattern < 10) {
+    } else if (switchXSpawn === 1 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
         enemyXSpawn = 100;
-        switchDirection = 2;
+        switchXSpawn = 2;
         switchToNewPattern++;
         // console.log(switchDirection);
         deployEnemyShips();
       });
-    } else if (switchDirection === 2 && switchToNewPattern < 10) {
+    } else if (switchXSpawn === 2 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
         enemyXSpawn = 300;
-        switchDirection = 0;
+        switchXSpawn = 0;
         switchToNewPattern++;
         // console.log(switchDirection);
         deployEnemyShips();
