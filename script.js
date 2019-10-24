@@ -221,6 +221,7 @@ function deployEnemyShips() {
     // game.time.events.add(300, deployEnemyShipsLeft);
     if (switchDirection === 0 && switchToNewPattern !== 10) {
       game.time.events.add(300, function() {
+        ENEMY_X = 0;
         enemyXSpawn = 300;
         switchDirection = 1;
         switchToNewPattern++;
@@ -229,6 +230,7 @@ function deployEnemyShips() {
       });
     } else if (switchDirection === 1 && switchToNewPattern !== 10) {
       game.time.events.add(300, function() {
+        ENEMY_X = 0;
         enemyXSpawn = 200;
         switchDirection = 2;
         switchToNewPattern++;
@@ -237,6 +239,7 @@ function deployEnemyShips() {
       });
     } else if (switchDirection === 2 && switchToNewPattern !== 10) {
       game.time.events.add(300, function() {
+        ENEMY_X = 0;
         enemyXSpawn = 100;
         switchDirection = 0;
         switchToNewPattern++;
@@ -250,19 +253,17 @@ function deployEnemyShips() {
         // switchDirection = 0;
         // console.log(switchDirection);
         game.time.events.add(2000, function() {
-          switchToNewPattern = 20;
+          switchToNewPattern = 0;
+          console.log(switchToNewPattern);
         });
         console.log('diagonal right side');
-        // setInterval(function() {
-        //   switchToNewPattern === 20;
-        // }, 1000);
         deployEnemyShips();
       });
     } else if (switchToNewPattern === 20) {
       game.time.events.add(250, function() {
         console.log('diagonal left side');
-        enemyXSpawn = 0;
-        ENEMY_X = 80;
+        enemyXSpawn = -380;
+        ENEMY_X = -160;
         // switchDirection = 0;
 
         deployEnemyShips();
@@ -270,22 +271,6 @@ function deployEnemyShips() {
     }
   }
 }
-
-// function deployEnemyShipsRight() {
-//   const ENEMY_SPEED = 300;
-//   let enemy2 = enemiesRight.getFirstExists(false);
-//   if (enemy2) {
-//     enemy2.reset(300, 0);
-//     enemy2.body.velocity.x = 0;
-//     enemy2.body.velocity.y = ENEMY_SPEED;
-//     enemy2.body.drag.x = 300;
-//     // enemy.update = function() {
-//     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
-//     // };
-//     //randomly adds new enemy ships
-//     game.time.events.add(300, deployEnemyShipsRight);
-//   }
-// }
 
 /******************
  *
@@ -322,8 +307,6 @@ function takeDamage(player, enemy) {
   setInterval(function() {
     dogImage.classList.remove('saturate');
   }, 100);
-
-  console.log(dogImage);
   enemy.kill();
   health -= 50;
   healthText.innerHTML = `Health: ${health}`;
