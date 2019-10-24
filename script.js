@@ -201,7 +201,7 @@ function fireLaser() {
  */
 let switchDirection = 0;
 let switchToNewPattern = 0;
-let enemyXSpawn = 100;
+let enemyXSpawn = 200;
 let ENEMY_X = 0;
 function deployEnemyShips() {
   //   const MIN_ENEMY_SPACING = 300;
@@ -222,7 +222,7 @@ function deployEnemyShips() {
     if (switchDirection === 0 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
-        enemyXSpawn = 300;
+        enemyXSpawn = 200;
         switchDirection = 1;
         switchToNewPattern++;
         // console.log(switchDirection);
@@ -231,7 +231,7 @@ function deployEnemyShips() {
     } else if (switchDirection === 1 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
-        enemyXSpawn = 200;
+        enemyXSpawn = 100;
         switchDirection = 2;
         switchToNewPattern++;
         // console.log(switchDirection);
@@ -240,7 +240,7 @@ function deployEnemyShips() {
     } else if (switchDirection === 2 && switchToNewPattern < 10) {
       game.time.events.add(300, function() {
         ENEMY_X = 0;
-        enemyXSpawn = 100;
+        enemyXSpawn = 300;
         switchDirection = 0;
         switchToNewPattern++;
         // console.log(switchDirection);
