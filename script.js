@@ -16,7 +16,7 @@ let laser; //to hold players laser shots
 let lasers;
 let laserTime = 0;
 let enemies; //to hold all the enemies
-let enemiesDiag;
+let specialEnemies; //hold special enemies
 let score = 0;
 const scoreText = document.querySelector('.score');
 let health = 200;
@@ -34,6 +34,8 @@ function preload() {
   game.load.image('playerShip', 'assets/spaceship.png');
   //enemy ship
   game.load.image('enemyShip', 'assets/enemy.png');
+  //special enemy ship
+  game.load.image('specialEnemy', 'assets/newEnemyShip.png');
   //player shot
   game.load.image('laser', 'assets/shot.png');
   //health pickup
@@ -117,6 +119,22 @@ function create() {
   //   game.time.events.loop(3000, function() {
   //     deployEnemyShipsLeft();
   //   });
+
+  /**
+   * Create special more difficult enemy
+   */
+  specialEnemies = game.add.group();
+  specialEnemies.enableBody = true;
+  game.physics.arcade.enable(specialEnemies, Phaser.Physics.ARCADE);
+  specialEnemies.createMultiple(20, 'specialEnemy');
+  specialEnemies.setAll('anchor.x', 0.5);
+  specialEnemies.setAll('anchor.y', 0.5);
+  specialEnemies.setAll('scale.x', 1.3);
+  specialEnemies.setAll('scale.y', 1.3);
+  specialEnemies.setAll('outOfBoundsKill', true);
+  specialEnemies.setAll('checkWorldBounds', true);
+  specialEnemies.setAll('angle', 180);
+  deploySpecialEnemy();
 
   setInterval(function() {
     healthAppear();
@@ -255,12 +273,10 @@ function deployEnemyShips() {
         game.time.events.add(2000, function() {
           switchToNewPattern = 20;
         });
-        console.log('diagonal right side');
         deployEnemyShips();
       });
     } else if (switchToNewPattern === 20) {
       game.time.events.add(250, function() {
-        console.log('diagonal left side');
         enemyXSpawn = 0;
         ENEMY_X = 80;
         // switchDirection = 0;
@@ -271,6 +287,25 @@ function deployEnemyShips() {
       });
     }
   }
+}
+
+let specialEnemyXSpawn = 200;
+function deploySpecialEnemy() {
+  //figure out how to get rid of normal enemies while special enemy is in play
+  //send down six special enemies at 100 200 300 x position
+  let specialEnemy = specialEnemies.getFirstExists(false);
+  //   if (specialEnemy) {
+  //     specialEnemy.reset(specialEnemyXSpawn, 0);
+  //     specialEnemyXSpawn = 300;
+  //     game.time.events.add(500, function() {
+  //       deploySpecialEnemy();
+  //     });
+  //   }
+
+  //   specialEnemy.scale.set(-0.1);
+  specialEnemy.body.velocity.x = ENEMY_X;
+  specialEnemy.body.velocity.y = 500;
+  specialEnemy.body.drag.x = 0;
 }
 
 /******************
@@ -339,9 +374,6 @@ function newPhrase() {
 
 function healthAppear() {
   let randomX = Math.floor(Math.random() * 600);
-  //   let healthXVelocity = 0;
-  //make health pickup appear in random x position
-  //and make it fall it random direction
   healthPickup = game.add.sprite(randomX, 20, 'healthPickup');
   healthPickup.enableBody = true;
   game.physics.arcade.enable(healthPickup, Phaser.Physics.ARCADE);
