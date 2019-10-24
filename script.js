@@ -113,7 +113,7 @@ function create() {
   enemies.setAll('checkWorldBounds', true);
   enemies.setAll('angle', 180);
   //   game.time.events.add(100, deployEnemyShips);
-  deployEnemyShipsLeft();
+  deployEnemyShips();
   //   game.time.events.loop(3000, function() {
   //     deployEnemyShipsLeft();
   //   });
@@ -200,42 +200,72 @@ function fireLaser() {
  * Function deployEnemies adds enemies to the game space
  */
 let switchDirection = 0;
+let switchToNewPattern = 0;
 let enemyXSpawn = 100;
-function deployEnemyShipsLeft() {
+let ENEMY_X = 0;
+function deployEnemyShips() {
   //   const MIN_ENEMY_SPACING = 300;
   //   const MAX_ENEMY_SPACING = 500;
-  const ENEMY_SPEED = 300;
+  let ENEMY_SPEED = 300;
+
   let enemy = enemies.getFirstExists(false);
   if (enemy) {
     enemy.reset(enemyXSpawn, 0);
-    enemy.body.velocity.x = 0;
+    enemy.body.velocity.x = ENEMY_X;
     enemy.body.velocity.y = ENEMY_SPEED;
-    enemy.body.drag.x = 100;
+    enemy.body.drag.x = 0;
     // enemy.update = function() {
     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
     // };
 
     // game.time.events.add(300, deployEnemyShipsLeft);
-    if (switchDirection === 0) {
+    if (switchDirection === 0 && switchToNewPattern !== 10) {
       game.time.events.add(300, function() {
         enemyXSpawn = 300;
         switchDirection = 1;
-        console.log(switchDirection);
-        deployEnemyShipsLeft();
+        switchToNewPattern++;
+        // console.log(switchDirection);
+        deployEnemyShips();
       });
-    } else if (switchDirection === 1) {
+    } else if (switchDirection === 1 && switchToNewPattern !== 10) {
       game.time.events.add(300, function() {
         enemyXSpawn = 200;
         switchDirection = 2;
-        console.log(switchDirection);
-        deployEnemyShipsLeft();
+        switchToNewPattern++;
+        // console.log(switchDirection);
+        deployEnemyShips();
       });
-    } else if (switchDirection === 2) {
+    } else if (switchDirection === 2 && switchToNewPattern !== 10) {
       game.time.events.add(300, function() {
         enemyXSpawn = 100;
         switchDirection = 0;
-        console.log(switchDirection);
-        deployEnemyShipsLeft();
+        switchToNewPattern++;
+        // console.log(switchDirection);
+        deployEnemyShips();
+      });
+    } else if (switchToNewPattern === 10) {
+      game.time.events.add(250, function() {
+        enemyXSpawn = 380;
+        ENEMY_X = -80;
+        // switchDirection = 0;
+        // console.log(switchDirection);
+        game.time.events.add(2000, function() {
+          switchToNewPattern = 20;
+        });
+        console.log('diagonal right side');
+        // setInterval(function() {
+        //   switchToNewPattern === 20;
+        // }, 1000);
+        deployEnemyShips();
+      });
+    } else if (switchToNewPattern === 20) {
+      game.time.events.add(250, function() {
+        console.log('diagonal left side');
+        enemyXSpawn = 0;
+        ENEMY_X = 80;
+        // switchDirection = 0;
+
+        deployEnemyShips();
       });
     }
   }
