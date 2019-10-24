@@ -126,7 +126,7 @@ function create() {
   specialEnemies = game.add.group();
   specialEnemies.enableBody = true;
   game.physics.arcade.enable(specialEnemies, Phaser.Physics.ARCADE);
-  specialEnemies.createMultiple(20, 'specialEnemy');
+  specialEnemies.createMultiple(10, 'specialEnemy');
   specialEnemies.setAll('anchor.x', 0.5);
   specialEnemies.setAll('anchor.y', 0.5);
   specialEnemies.setAll('scale.x', 1.3);
@@ -240,8 +240,6 @@ function deployEnemyShips() {
     // enemy.update = function() {
     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
     // };
-
-    // game.time.events.add(300, deployEnemyShipsLeft);
     if (switchXSpawn === 0 && switchToNewPattern < 10) {
       spawnSpecialEnemy = false;
       game.time.events.add(300, function() {
@@ -287,48 +285,50 @@ function deployEnemyShips() {
         ENEMY_X = 80;
         // switchDirection = 0;
         game.time.events.add(2000, function() {
-          switchToNewPattern = 30;
+          switchToNewPattern = 0;
         });
         deployEnemyShips();
       });
     } else if (switchToNewPattern === 30) {
       spawnSpecialEnemy = true;
-      deploySpecialEnemy();
+      //   deploySpecialEnemy();
     }
   }
 }
+// let specialCount = 0;
+// let specialEnemyXSpawn = 200;
+// function deploySpecialEnemy() {
+//   //figure out how to get rid of normal enemies while special enemy is in play
+//   if (spawnSpecialEnemy != false) {
+//     let specialEnemy = specialEnemies.getFirstExists(false);
+//     specialEnemy.body.velocity.y = 800;
+//     specialEnemy.body.drag.x = 0;
+//     if (specialEnemy && specialCount != 3) {
+//       specialEnemy.reset(specialEnemyXSpawn, 0);
+//       game.time.events.add(500, function() {
+//         deploySpecialEnemy();
+//         if (specialEnemyXSpawn === 200) {
+//           specialEnemyXSpawn = 100;
+//           console.log(specialEnemyXSpawn);
+//         } else if (specialEnemyXSpawn === 100) {
+//           specialEnemyXSpawn = 300;
+//           console.log(specialEnemyXSpawn);
+//         } else if (specialEnemyXSpawn === 300) {
+//           console.log('ok done');
+//           switchToNewPattern = 0;
+//           enemyXSpawn = 200;
+//           specialEnemyXSpawn = 200;
+//           specialCount++;
+//           deploySpecialEnemy();
+//           setInterval(function() {}, 30000);
 
-let specialEnemyXSpawn = 200;
-function deploySpecialEnemy() {
-  //figure out how to get rid of normal enemies while special enemy is in play
-  if (spawnSpecialEnemy != false) {
-    let specialEnemy = specialEnemies.getFirstExists(false);
-    if (specialEnemy) {
-      specialEnemy.reset(specialEnemyXSpawn, 0);
-      game.time.events.add(500, function() {
-        deploySpecialEnemy();
-        if (specialEnemyXSpawn === 200) {
-          specialEnemyXSpawn = 100;
-          console.log(specialEnemyXSpawn);
-        } else if (specialEnemyXSpawn === 100) {
-          specialEnemyXSpawn = 300;
-          console.log(specialEnemyXSpawn);
-        } else if (specialEnemyXSpawn === 300) {
-          specialEnemyXSpawn = 200;
-          console.log(specialEnemyXSpawn);
-        }
-        setInterval(function() {
-          spawnSpecialEnemy = false;
-          deployEnemyShips();
-        }, 10000);
-      });
-    }
-    //   specialEnemy.scale.set(-0.1);
-    specialEnemy.body.velocity.x = 0;
-    specialEnemy.body.velocity.y = 800;
-    specialEnemy.body.drag.x = 0;
-  }
-}
+//           console.log(specialEnemyXSpawn);
+//         }
+//       });
+//     }
+//     //   specialEnemy.scale.set(-0.1);
+//   }
+// }
 
 /******************
  *
