@@ -17,6 +17,7 @@ let lasers;
 let laserTime = 0;
 let enemies; //to hold all the enemies
 let enemiesRight;
+let enemiesDiagonal;
 let score = 0;
 const scoreText = document.querySelector('.score');
 let health = 100;
@@ -29,7 +30,6 @@ function preload() {
   let mouseClick;
   let leftKey;
   let rightKey;
-  let spaceKey;
   game.load.image('background', 'assets/spacebg.gif');
   //player ship
   game.load.image('playerShip', 'assets/spaceship.png');
@@ -75,11 +75,10 @@ function create() {
   player = game.add.sprite(game.canvas.width / 2, game.canvas.height - 100, 'playerShip');
   game.physics.arcade.enable(player, Phaser.Physics.ARCADE); //set player physics
   player.body.collideWorldBounds = true; //player cannot leave world bounds
-  console.log(2);
   player.anchor.set(0.5, 1); //position player's anchor point to the middle of sprite
   player.body.immovable = true; //player wont move upon collision
-  player.x = game.input.x || game.world.width * 0.5;
-  player.body.velocity.x = 200; //set default x velocity to 200 so ship moves on it own
+  player.x = game.input.x || game.world.width * 0.5; //player starts in middle of screen
+  player.body.velocity.x = 200; //set default x velocity to 200
 
   /**
    * create player laser bullet
@@ -99,12 +98,8 @@ function create() {
   /**
    * Create enemies
    */
-  //create 6 enemies
-  //add enemy to game
-  //make enemy move side to side
-  //give enemy collision
+
   //make enemy shoot bullet
-  //make enemy blow up ONLY WHEN hit by player bullet
   //create enemy class to define several features ****
   // enemy movement and make enemy fire at random intervals
 
@@ -112,7 +107,6 @@ function create() {
   enemies.enableBody = true;
   game.physics.arcade.enable(enemies, Phaser.Physics.ARCADE);
   enemies.createMultiple(5, 'enemyShip');
-  enemies.maxSize = 5;
   enemies.setAll('anchor.x', 0.5);
   enemies.setAll('anchor.y', 0.5);
   //   enemies.setAll('scale.x', 0.5);
@@ -121,34 +115,31 @@ function create() {
   enemies.setAll('checkWorldBounds', true);
   enemies.setAll('angle', 180);
   //   game.time.events.add(100, deployEnemyShips);
-
-  setInterval(function() {
-    deployEnemyShipsLeft();
-  }, 1500);
+  deployEnemyShipsLeft();
   //   game.time.events.loop(3000, function() {
   //     deployEnemyShipsLeft();
   //   });
 
-  enemiesRight = game.add.group();
-  enemiesRight.enableBody = true;
-  game.physics.arcade.enable(enemiesRight, Phaser.Physics.ARCADE);
-  enemiesRight.createMultiple(5, 'enemyShip2');
-  enemiesRight.setAll('anchor.x', 0.5);
-  enemiesRight.setAll('anchor.y', 0.5);
-  //   enemies.setAll('scale.x', 0.5);
-  //   enemies.setAll('scale.y', 0.5);
-  enemiesRight.setAll('outOfBoundsKill', true);
-  enemiesRight.setAll('checkWorldBounds', true);
-  enemiesRight.setAll('angle', 180);
-  game.time.events.add(3000, function() {
-    game.time.events.loop(5000, function() {
-      deployEnemyShipsRight();
-    });
-  });
+  //   enemiesRight = game.add.group();
+  //   enemiesRight.enableBody = true;
+  //   game.physics.arcade.enable(enemiesRight, Phaser.Physics.ARCADE);
+  //   enemiesRight.createMultiple(5, 'enemyShip2');
+  //   enemiesRight.setAll('anchor.x', 0.5);
+  //   enemiesRight.setAll('anchor.y', 0.5);
+  //   //   enemies.setAll('scale.x', 0.5);
+  //   //   enemies.setAll('scale.y', 0.5);
+  //   enemiesRight.setAll('outOfBoundsKill', true);
+  //   enemiesRight.setAll('checkWorldBounds', true);
+  //   enemiesRight.setAll('angle', 180);
+  //   game.time.events.add(3000, function() {
+  //     game.time.events.loop(5000, function() {
+  //       deployEnemyShipsRight();
+  //     });
+  //   });
 
   setInterval(function() {
     healthAppear();
-  }, 3000);
+  }, 5000);
 }
 
 /*****************************************
@@ -198,12 +189,10 @@ function update() {
 
   background.tilePosition.y += 1;
   let j = 0;
-  //update captain dialogue for score % 2500 = 0;
+  //update captain dialogue for score % 1500 = 0;
   if (score % 1000 === 0 && score !== 0 && j != 1) {
     const captainText = document.querySelector('.character-text');
     captainText.innerHTML = newPhrase();
-
-    console.log(j);
   }
 }
 
@@ -231,40 +220,44 @@ function fireLaser() {
  *
  * Function deployEnemies adds enemies to the game space
  */
+let enemyXSpawn = 100;
 function deployEnemyShipsLeft() {
   //   const MIN_ENEMY_SPACING = 300;
   //   const MAX_ENEMY_SPACING = 500;
   const ENEMY_SPEED = 300;
-
   let enemy = enemies.getFirstExists(false);
   if (enemy) {
-    enemy.reset(100, 0);
+    enemy.reset(enemyXSpawn, 0);
     enemy.body.velocity.x = 0;
     enemy.body.velocity.y = ENEMY_SPEED;
     enemy.body.drag.x = 100;
     // enemy.update = function() {
     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
     // };
-    //randomly adds new enemy ships
+
     game.time.events.add(300, deployEnemyShipsLeft);
+    game.time.events.add(5000, function() {
+      enemyXSpawn = 300;
+      deployEnemyShipsLeft();
+    });
   }
 }
 
-function deployEnemyShipsRight() {
-  const ENEMY_SPEED = 300;
-  let enemy2 = enemiesRight.getFirstExists(false);
-  if (enemy2) {
-    enemy2.reset(300, 0);
-    enemy2.body.velocity.x = 0;
-    enemy2.body.velocity.y = ENEMY_SPEED;
-    enemy2.body.drag.x = 300;
-    // enemy.update = function() {
-    //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
-    // };
-    //randomly adds new enemy ships
-    game.time.events.add(300, deployEnemyShipsRight);
-  }
-}
+// function deployEnemyShipsRight() {
+//   const ENEMY_SPEED = 300;
+//   let enemy2 = enemiesRight.getFirstExists(false);
+//   if (enemy2) {
+//     enemy2.reset(300, 0);
+//     enemy2.body.velocity.x = 0;
+//     enemy2.body.velocity.y = ENEMY_SPEED;
+//     enemy2.body.drag.x = 300;
+//     // enemy.update = function() {
+//     //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
+//     // };
+//     //randomly adds new enemy ships
+//     game.time.events.add(300, deployEnemyShipsRight);
+//   }
+// }
 
 /******************
  *
@@ -312,7 +305,10 @@ const gameOver = document.querySelector('.gameover');
 //Function killPlayer removes the player from the game
 function killPlayer() {
   player.kill();
-  laser.kill();
+  if (laser) {
+    laser.kill();
+  }
+
   gameOver.style.display = 'initial';
 }
 
