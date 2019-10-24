@@ -182,6 +182,10 @@ function update() {
   if (health <= 0) {
     killPlayer();
   }
+  //add collision detection for specialEnemy and playerShip
+  game.physics.arcade.collide(specialEnemies, player, takeDamage);
+  game.physics.arcade.collide(lasers, specialEnemies, destroyEnemy);
+  //add collision for health pickup
   game.physics.arcade.collide(healthPickup, player, increaseHealth);
 
   background.tilePosition.y += 1;
@@ -221,6 +225,7 @@ let switchXSpawn = 0;
 let switchToNewPattern = 0;
 let enemyXSpawn = 200;
 let ENEMY_X = 0;
+let spawnSpecialEnemy = false;
 function deployEnemyShips() {
   //   const MIN_ENEMY_SPACING = 300;
   //   const MAX_ENEMY_SPACING = 500;
@@ -238,6 +243,7 @@ function deployEnemyShips() {
 
     // game.time.events.add(300, deployEnemyShipsLeft);
     if (switchXSpawn === 0 && switchToNewPattern < 10) {
+      spawnSpecialEnemy = false;
       game.time.events.add(300, function() {
         ENEMY_X = 0;
         enemyXSpawn = 200;
@@ -286,6 +292,7 @@ function deployEnemyShips() {
         deployEnemyShips();
       });
     } else if (switchToNewPattern === 30) {
+      spawnSpecialEnemy = true;
       deploySpecialEnemy();
     }
   }
@@ -294,30 +301,33 @@ function deployEnemyShips() {
 let specialEnemyXSpawn = 200;
 function deploySpecialEnemy() {
   //figure out how to get rid of normal enemies while special enemy is in play
-
-  let specialEnemy = specialEnemies.getFirstExists(false);
-  if (specialEnemy) {
-    specialEnemy.reset(specialEnemyXSpawn, 0);
-
-    game.time.events.add(800, function() {
-      deploySpecialEnemy();
-      if (specialEnemyXSpawn === 200) {
-        specialEnemyXSpawn = 100;
-        console.log(specialEnemyXSpawn);
-      } else if (specialEnemyXSpawn === 100) {
-        specialEnemyXSpawn = 300;
-        console.log(specialEnemyXSpawn);
-      } else if (specialEnemyXSpawn === 300) {
-        specialEnemyXSpawn = 200;
-        console.log(specialEnemyXSpawn);
-      }
-    });
+  if (spawnSpecialEnemy != false) {
+    let specialEnemy = specialEnemies.getFirstExists(false);
+    if (specialEnemy) {
+      specialEnemy.reset(specialEnemyXSpawn, 0);
+      game.time.events.add(500, function() {
+        deploySpecialEnemy();
+        if (specialEnemyXSpawn === 200) {
+          specialEnemyXSpawn = 100;
+          console.log(specialEnemyXSpawn);
+        } else if (specialEnemyXSpawn === 100) {
+          specialEnemyXSpawn = 300;
+          console.log(specialEnemyXSpawn);
+        } else if (specialEnemyXSpawn === 300) {
+          specialEnemyXSpawn = 200;
+          console.log(specialEnemyXSpawn);
+        }
+        setInterval(function() {
+          spawnSpecialEnemy = false;
+          deployEnemyShips();
+        }, 10000);
+      });
+    }
+    //   specialEnemy.scale.set(-0.1);
+    specialEnemy.body.velocity.x = 0;
+    specialEnemy.body.velocity.y = 800;
+    specialEnemy.body.drag.x = 0;
   }
-
-  //   specialEnemy.scale.set(-0.1);
-  specialEnemy.body.velocity.x = 0;
-  specialEnemy.body.velocity.y = 700;
-  specialEnemy.body.drag.x = 0;
 }
 
 /******************
@@ -343,7 +353,7 @@ function increaseScore() {
 
 //Function takeDamage reduces the players health on collision with enemy
 const healthText = document.querySelector('#health');
-function takeDamage(player, enemy) {
+function takeDamage(player, enemy, specialEnemy) {
   const dogImage = document.querySelector('.player-image');
   dogImage.classList.add('saturate');
   setInterval(function() {
