@@ -3,6 +3,7 @@
  */
 
 //create game
+
 const game = new Phaser.Game(400, 730, Phaser.AUTO, 'game-wrapper', {
   preload: preload,
   create: create,
@@ -374,6 +375,7 @@ function killPlayer() {
   explosion.animations.add('boom');
   explosion.play('boom', 15, false, true);
   player.kill();
+  Phaser.GAMES[0].paused = true;
 
   if (laser) {
     laser.kill();
