@@ -75,6 +75,7 @@ function create() {
   player = game.add.sprite(game.canvas.width / 2, game.canvas.height - 100, 'playerShip');
   game.physics.arcade.enable(player, Phaser.Physics.ARCADE); //set player physics
   player.body.collideWorldBounds = true; //player cannot leave world bounds
+  player.body.bounce.setTo(1);
   player.anchor.set(0.5, 1); //position player's anchor point to the middle of sprite
   player.body.immovable = true; //player wont move upon collision
   player.x = game.input.x || game.world.width * 0.5; //player starts in middle of screen
