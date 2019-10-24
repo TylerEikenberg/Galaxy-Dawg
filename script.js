@@ -120,7 +120,7 @@ function create() {
 
   setInterval(function() {
     healthAppear();
-  }, 10000);
+  }, 5000);
 }
 
 /*****************************************
@@ -333,7 +333,11 @@ function newPhrase() {
 }
 
 function healthAppear() {
-  healthPickup = game.add.sprite(200, 80, 'healthPickup');
+  let randomX = Math.floor(Math.random() * 600);
+  //   let healthXVelocity = 0;
+  //make health pickup appear in random x position
+  //and make it fall it random direction
+  healthPickup = game.add.sprite(randomX, 20, 'healthPickup');
   healthPickup.enableBody = true;
   game.physics.arcade.enable(healthPickup, Phaser.Physics.ARCADE);
   healthPickup.anchor.set(0.5, 1);
