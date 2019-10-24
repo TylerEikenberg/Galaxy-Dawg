@@ -134,7 +134,7 @@ function create() {
   specialEnemies.setAll('outOfBoundsKill', true);
   specialEnemies.setAll('checkWorldBounds', true);
   specialEnemies.setAll('angle', 180);
-  deploySpecialEnemy();
+  //   deploySpecialEnemy();
 
   setInterval(function() {
     healthAppear();
@@ -281,10 +281,12 @@ function deployEnemyShips() {
         ENEMY_X = 80;
         // switchDirection = 0;
         game.time.events.add(2000, function() {
-          switchToNewPattern = 0;
+          switchToNewPattern = 30;
         });
         deployEnemyShips();
       });
+    } else if (switchToNewPattern === 30) {
+      deploySpecialEnemy();
     }
   }
 }
@@ -292,7 +294,7 @@ function deployEnemyShips() {
 let specialEnemyXSpawn = 200;
 function deploySpecialEnemy() {
   //figure out how to get rid of normal enemies while special enemy is in play
-  //send down six special enemies at 100 200 300 x position
+
   let specialEnemy = specialEnemies.getFirstExists(false);
   if (specialEnemy) {
     specialEnemy.reset(specialEnemyXSpawn, 0);
@@ -313,7 +315,7 @@ function deploySpecialEnemy() {
   }
 
   //   specialEnemy.scale.set(-0.1);
-  specialEnemy.body.velocity.x = ENEMY_X;
+  specialEnemy.body.velocity.x = 0;
   specialEnemy.body.velocity.y = 700;
   specialEnemy.body.drag.x = 0;
 }
