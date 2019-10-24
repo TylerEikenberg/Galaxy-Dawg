@@ -368,6 +368,8 @@ function takeDamage(player, enemy, specialEnemy) {
 }
 
 const gameOver = document.querySelector('.gameover');
+const restart = document.querySelector('.restart');
+console.log(restart);
 //Function killPlayer removes the player from the game
 function killPlayer() {
   let explosion = game.add.sprite(player.x - 50, player.y - 80, 'explosion');
@@ -381,7 +383,12 @@ function killPlayer() {
     laser.kill();
   }
 
+  restart.classList.remove('display-none');
   gameOver.style.display = 'initial';
+
+  restart.addEventListener('click', function(e) {
+    location.reload();
+  });
 }
 
 //function new phrase returns a random phrase

@@ -33,6 +33,19 @@ body {
     font-family: 'Press Start 2P', cursive;
     display: none;
   }
+  .restart{
+    position: absolute;
+    color: white;
+    bottom: 50%;
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    border: 2px solid white;
+    padding: 5px;
+    margin-bottom: -5%;
+  }
+  .restart:hover{
+    color: yellow;
+  }
   #health{
     position: absolute;
     color: white;
