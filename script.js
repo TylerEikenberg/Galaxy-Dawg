@@ -294,17 +294,27 @@ function deploySpecialEnemy() {
   //figure out how to get rid of normal enemies while special enemy is in play
   //send down six special enemies at 100 200 300 x position
   let specialEnemy = specialEnemies.getFirstExists(false);
-  //   if (specialEnemy) {
-  //     specialEnemy.reset(specialEnemyXSpawn, 0);
-  //     specialEnemyXSpawn = 300;
-  //     game.time.events.add(500, function() {
-  //       deploySpecialEnemy();
-  //     });
-  //   }
+  if (specialEnemy) {
+    specialEnemy.reset(specialEnemyXSpawn, 0);
+
+    game.time.events.add(800, function() {
+      deploySpecialEnemy();
+      if (specialEnemyXSpawn === 200) {
+        specialEnemyXSpawn = 100;
+        console.log(specialEnemyXSpawn);
+      } else if (specialEnemyXSpawn === 100) {
+        specialEnemyXSpawn = 300;
+        console.log(specialEnemyXSpawn);
+      } else if (specialEnemyXSpawn === 300) {
+        specialEnemyXSpawn = 200;
+        console.log(specialEnemyXSpawn);
+      }
+    });
+  }
 
   //   specialEnemy.scale.set(-0.1);
   specialEnemy.body.velocity.x = ENEMY_X;
-  specialEnemy.body.velocity.y = 500;
+  specialEnemy.body.velocity.y = 700;
   specialEnemy.body.drag.x = 0;
 }
 
