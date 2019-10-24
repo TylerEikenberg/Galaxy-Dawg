@@ -154,18 +154,13 @@ function create() {
  * */
 function update() {
   /**
-   * COME BACK TO THIS LATER
-   * CHANGE INPUT TO MOUSE CLICK ONLY
+   *
+   *
    */
-  //   if (game.mouseClick.isDown) {
-  //     console.log('click');
-  //     player.body.velocity.x = -player.body.velocity.x * 1;
-  //     if (player.body.velocity > 0) {
-  //       player.body.velocity.x = -200;
-  //     } else if (player.body.velocity < 0) {
-  //       player.body.velocity.x = 200;
-  //     }
-  //   }
+
+  if (game.input.activePointer.isDown) {
+    playerMovement();
+  }
 
   if (game.leftKey.isDown) {
     player.body.velocity.x = -200;
@@ -415,4 +410,13 @@ function increaseHealth(healthPickup) {
   setInterval(function() {
     healthText.classList.remove('glowText');
   }, 800);
+}
+
+function playerMovement() {
+  if (game.time.now > 500) {
+    game.input.activePointer.isDown = false;
+    player.body.velocity.x = player.body.velocity.x * -1;
+    console.log(player.body.velocity.x);
+    fireLaser();
+  }
 }
