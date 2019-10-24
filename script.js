@@ -316,7 +316,12 @@ function takeDamage(player, enemy) {
 const gameOver = document.querySelector('.gameover');
 //Function killPlayer removes the player from the game
 function killPlayer() {
+  let explosion = game.add.sprite(player.x - 50, player.y - 80, 'explosion');
+  explosion.scale.set(4);
+  explosion.animations.add('boom');
+  explosion.play('boom', 15, false, true);
   player.kill();
+
   if (laser) {
     laser.kill();
   }
