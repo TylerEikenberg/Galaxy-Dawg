@@ -21,8 +21,9 @@ let specialEnemies; //hold special enemies
 let score = 0;
 
 let newHighscore = 0;
-if (localStorage.getItem('High Score')) {
+if (localStorage.getItem('High-Score')) {
   newHighscore = localStorage.getItem('High-Score'); //use local storage to save highscore
+  console.log(newHighscore);
 }
 const scoreText = document.querySelector('.score');
 let health = 200;
@@ -325,10 +326,8 @@ function deploySpecialEnemy() {
         deploySpecialEnemy();
         if (specialEnemyXSpawn === 200) {
           specialEnemyXSpawn = 100;
-          console.log(specialEnemyXSpawn);
         } else if (specialEnemyXSpawn === 100) {
           specialEnemyXSpawn = 300;
-          console.log(specialEnemyXSpawn);
         } else if (specialEnemyXSpawn === 300) {
           switchToNewPattern = 0;
           enemyXSpawn = 200;
