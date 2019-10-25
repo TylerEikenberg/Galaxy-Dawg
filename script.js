@@ -19,7 +19,11 @@ let laserTime = 0;
 let enemies; //to hold all the enemies
 let specialEnemies; //hold special enemies
 let score = 0;
+
 let newHighscore = 0;
+if (localStorage.getItem('High Score')) {
+  newHighscore = localStorage.getItem('High-Score'); //use local storage to save highscore
+}
 const scoreText = document.querySelector('.score');
 let health = 200;
 
@@ -358,6 +362,7 @@ function increaseScore() {
   }
   const highscore = document.querySelector('.highscore');
   highscore.innerHTML = `High Score: ${newHighscore}`;
+  localStorage.setItem('High-Score', newHighscore); //set highscore in local storage
 }
 
 //Function takeDamage reduces the players health on collision with enemy
