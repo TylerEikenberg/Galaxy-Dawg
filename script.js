@@ -48,6 +48,11 @@ function preload() {
   game.load.image('healthPickup', 'assets/heart2.png');
   //explosion
   game.load.spritesheet('explosion', 'assets/explosion3.png', 32, 32);
+  //sounds
+  game.load.audio('laserBlast', 'assets/laserNoise.wav');
+  game.load.audio('enemySplode', 'assets/enemyExplode.wav');
+  game.load.audio('healthGet', 'assets/healthSound.wav');
+  game.load.audio('playerDie', 'assets/playerDie.wav');
 }
 
 /*****************************************
@@ -215,6 +220,8 @@ function fireLaser() {
       laser.body.velocity.y = -400;
 
       laserTime = game.time.now + 200;
+      let laserBlast = game.sound.add('laserBlast');
+      laserBlast.play();
     }
   }
 }
@@ -351,6 +358,8 @@ function destroyEnemy(enemy, laser) {
   explosion.scale.set(2);
   explosion.animations.add('boom');
   explosion.play('boom', 15, false, true);
+  let soundExplode = game.sound.add('enemySplode');
+  soundExplode.play();
 }
 
 //Function increaseScore increass the players score by 50
@@ -368,6 +377,8 @@ function increaseScore() {
 //Function takeDamage reduces the players health on collision with enemy
 const healthText = document.querySelector('#health');
 function takeDamage(player, enemy, specialEnemy) {
+  let playerDeath = game.add.sound('playerDie');
+  playerDeath.play();
   const dogImage = document.querySelector('.player-image');
   dogImage.classList.add('saturate');
   setInterval(function() {
@@ -394,6 +405,7 @@ function killPlayer() {
   explosion.animations.add('boom');
   explosion.play('boom', 15, false, true);
   player.kill();
+
   Phaser.GAMES[0].paused = true;
 
   if (laser) {
@@ -432,6 +444,8 @@ function healthAppear() {
 function increaseHealth(healthPickup) {
   healthPickup.kill();
   health += 50;
+  let healthSound = game.add.sound('healthGet');
+  healthSound.play();
   healthText.innerHTML = `Health: ${health}`;
   healthText.classList.add('glowText');
   setInterval(function() {
