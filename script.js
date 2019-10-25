@@ -70,16 +70,14 @@ function preload() {
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE); //add physics engine
-  //   game.input.mouse.capture = true; ADD CLICK FUNCTIONALITY LATER *********
 
   background = game.add.tileSprite(0, 0, 1000, 600, 'background');
   background.scale.x = 1;
   background.scale.y = 2;
   //set keys to keyboard input
-  //   game.mouseClick = game.input.pointer1;
+
   game.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
   game.rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-  //   game.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   //set player to playerShip
   //set player to game.add.sprite to enable body physics
@@ -121,16 +119,12 @@ function create() {
   enemies.createMultiple(500, 'enemyShip');
   enemies.setAll('anchor.x', 0.5);
   enemies.setAll('anchor.y', 0.5);
-  //   enemies.setAll('scale.x', 0.5);
-  //   enemies.setAll('scale.y', 0.5);
+
   enemies.setAll('outOfBoundsKill', true);
   enemies.setAll('checkWorldBounds', true);
   enemies.setAll('angle', 180);
-  //   game.time.events.add(100, deployEnemyShips);
+
   deployEnemyShips();
-  //   game.time.events.loop(3000, function() {
-  //     deployEnemyShipsLeft();
-  //   });
 
   /**
    * Create special more difficult enemy
@@ -146,7 +140,6 @@ function create() {
   specialEnemies.setAll('outOfBoundsKill', true);
   specialEnemies.setAll('checkWorldBounds', true);
   specialEnemies.setAll('angle', 180);
-  //   deploySpecialEnemy();
 
   setInterval(function() {
     healthAppear();
@@ -197,7 +190,7 @@ function update() {
 
   background.tilePosition.y += 1;
   let j = 0;
-  //update captain dialogue for score % 1500 = 0;
+  //update captain dialogue for score % 1000 = 0;
   if (score % 1000 === 0 && score !== 0 && j != 1) {
     const captainText = document.querySelector('.character-text');
     captainText.innerHTML = newPhrase();
@@ -252,7 +245,7 @@ function deployEnemyShips() {
         enemyXSpawn = 200;
         switchXSpawn = 1;
         switchToNewPattern++;
-        // console.log('wave 1');
+
         deployEnemyShips();
       });
     } else if (switchXSpawn === 1 && switchToNewPattern < 10) {
@@ -261,7 +254,7 @@ function deployEnemyShips() {
         enemyXSpawn = 100;
         switchXSpawn = 2;
         switchToNewPattern++;
-        // console.log('wave 2');
+
         deployEnemyShips();
       });
     } else if (switchXSpawn === 2 && switchToNewPattern < 10) {
@@ -270,15 +263,14 @@ function deployEnemyShips() {
         enemyXSpawn = 300;
         switchXSpawn = 0;
         switchToNewPattern++;
-        // console.log('wave 3');
+
         deployEnemyShips();
       });
     } else if (switchToNewPattern === 10) {
       game.time.events.add(250, function() {
         enemyXSpawn = 380;
         ENEMY_X = -80;
-        // switchDirection = 0;
-        // console.log('wave 4');
+
         game.time.events.add(2000, function() {
           switchToNewPattern = 20;
         });
@@ -288,7 +280,7 @@ function deployEnemyShips() {
       game.time.events.add(250, function() {
         enemyXSpawn = 0;
         ENEMY_X = 80;
-        // console.log('wave 5');
+
         game.time.events.add(2000, function() {
           switchToNewPattern = 30;
         });
@@ -300,7 +292,7 @@ function deployEnemyShips() {
       switchToNewPattern = 0;
       enemyXSpawn = 200;
       ENEMY_X = 0;
-      console.log('wave 6');
+
       deploySpecialEnemy();
     }
   }
@@ -317,18 +309,14 @@ function deploySpecialEnemy() {
       specialEnemy.body.velocity.y = 800;
       specialEnemy.body.drag.x = 0;
       game.time.events.add(500, function() {
-        console.log('special wave 1');
         deploySpecialEnemy();
         if (specialEnemyXSpawn === 200) {
           specialEnemyXSpawn = 100;
         } else if (specialEnemyXSpawn === 100) {
           specialEnemyXSpawn = 300;
         } else if (specialEnemyXSpawn === 300) {
-          //   switchToNewPattern = 0;
-          //   enemyXSpawn = 200;
           specialEnemyXSpawn = 200;
-          //   specialCount = 0;
-          //   deploySpecialEnemy();
+
           setInterval(function() {
             deployEnemyShips();
           }, 5000);
@@ -428,7 +416,7 @@ function healthAppear() {
   healthPickup.enableBody = true;
   game.physics.arcade.enable(healthPickup, Phaser.Physics.ARCADE);
   healthPickup.anchor.set(0.5, 1);
-  //   healthPickup.scale.set(1.5, 1.5);
+
   healthPickup.body.immovable = false;
   healthPickup.body.velocity.x = 20;
   healthPickup.body.velocity.y = 200;
