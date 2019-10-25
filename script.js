@@ -19,6 +19,7 @@ let laserTime = 0;
 let enemies; //to hold all the enemies
 let specialEnemies; //hold special enemies
 let score = 0;
+let newHighscore = 0;
 const scoreText = document.querySelector('.score');
 let health = 200;
 
@@ -40,7 +41,7 @@ function preload() {
   //player shot
   game.load.image('laser', 'assets/shot.png');
   //health pickup
-  game.load.image('healthPickup', 'assets/health.png');
+  game.load.image('healthPickup', 'assets/heart2.png');
   //explosion
   game.load.spritesheet('explosion', 'assets/explosion3.png', 32, 32);
 }
@@ -352,6 +353,11 @@ function destroyEnemy(enemy, laser) {
 function increaseScore() {
   score += 50;
   scoreText.innerHTML = `Score: ${score}`;
+  if (score > newHighscore) {
+    newHighscore = score;
+  }
+  const highscore = document.querySelector('.highscore');
+  highscore.innerHTML = `High Score: ${newHighscore}`;
 }
 
 //Function takeDamage reduces the players health on collision with enemy

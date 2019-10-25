@@ -1,4 +1,5 @@
 body {
+    margin: auto;
     height: 100%;
     overflow: hidden;
     box-sizing: border-box;
@@ -20,6 +21,12 @@ body {
     position: relative;
     border: 5px solid white;
   }
+  header{
+      display: none;
+  }
+  footer{
+    display: none;
+}
   .score{
       position: absolute;
       color: white;
@@ -69,10 +76,30 @@ body {
 
   @media only screen and (min-width: 768px){
     .desktop-margins{
-        margin-top: 5%;
-        margin-left: 19%;
-        background: blueviolet
+        background: black;
         
+    }
+    header{
+        padding-top: 10px;
+        display: inherit;
+        text-align: center;
+        background: black;
+        height: 75px;
+        width: 100%;
+        color: white;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 20px;
+    }
+    footer{
+        padding-top: 10px;
+        display: inherit;
+        text-align: center;
+        background: black;
+        height: 75px;
+        width: 100%;
+        color: white;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 20px;
     }
     .outside-game{
       margin: auto;
@@ -99,6 +126,17 @@ body {
         color: white;
         font-family: 'Press Start 2P', cursive;
         line-height: 1.5em;
+    }
+    .highscore-div{
+        position: absolute;
+        padding-left: 38%;
+        bottom: 20%;
+    }
+    .highscore{
+        color: white;
+        font-family: 'Press Start 2P', cursive;
+        width: 50%;
+        line-height: 1.2em;
     }
 
     .player-image{
