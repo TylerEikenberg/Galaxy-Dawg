@@ -23,7 +23,6 @@ let score = 0;
 let newHighscore = 0;
 if (localStorage.getItem('High-Score')) {
   newHighscore = localStorage.getItem('High-Score'); //use local storage to save highscore
-  console.log(newHighscore);
 }
 const scoreText = document.querySelector('.score');
 let health = 200;
@@ -257,7 +256,7 @@ function deployEnemyShips() {
         enemyXSpawn = 200;
         switchXSpawn = 1;
         switchToNewPattern++;
-        console.log('wave 1');
+        // console.log('wave 1');
         deployEnemyShips();
       });
     } else if (switchXSpawn === 1 && switchToNewPattern < 10) {
@@ -266,7 +265,7 @@ function deployEnemyShips() {
         enemyXSpawn = 100;
         switchXSpawn = 2;
         switchToNewPattern++;
-        console.log('wave 2');
+        // console.log('wave 2');
         deployEnemyShips();
       });
     } else if (switchXSpawn === 2 && switchToNewPattern < 10) {
@@ -275,7 +274,7 @@ function deployEnemyShips() {
         enemyXSpawn = 300;
         switchXSpawn = 0;
         switchToNewPattern++;
-        console.log('wave 3');
+        // console.log('wave 3');
         deployEnemyShips();
       });
     } else if (switchToNewPattern === 10) {
@@ -283,7 +282,7 @@ function deployEnemyShips() {
         enemyXSpawn = 380;
         ENEMY_X = -80;
         // switchDirection = 0;
-        console.log('wave 4');
+        // console.log('wave 4');
         game.time.events.add(2000, function() {
           switchToNewPattern = 20;
         });
@@ -293,7 +292,7 @@ function deployEnemyShips() {
       game.time.events.add(250, function() {
         enemyXSpawn = 0;
         ENEMY_X = 80;
-        console.log('wave 5');
+        // console.log('wave 5');
         game.time.events.add(2000, function() {
           switchToNewPattern = 30;
         });
@@ -396,7 +395,6 @@ function takeDamage(player, enemy, specialEnemy) {
 
 const gameOver = document.querySelector('.gameover');
 const restart = document.querySelector('.restart');
-console.log(restart);
 //Function killPlayer removes the player from the game
 function killPlayer() {
   let explosion = game.add.sprite(player.x - 50, player.y - 80, 'explosion');
@@ -405,7 +403,9 @@ function killPlayer() {
   explosion.play('boom', 15, false, true);
   player.kill();
 
-  Phaser.GAMES[0].paused = true;
+  setInterval(function() {
+    Phaser.GAMES[0].paused = true;
+  }, 500);
 
   if (laser) {
     laser.kill();
@@ -456,7 +456,6 @@ function playerMovement() {
   if (game.time.now > 500) {
     game.input.activePointer.isDown = false;
     player.body.velocity.x = player.body.velocity.x * -1;
-    console.log(player.body.velocity.x);
     fireLaser();
   }
 }
