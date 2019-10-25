@@ -20,10 +20,6 @@ Gameplay for __Galaxy Dawg__ is very easy and can be played with the __left__ an
 
 
 ### Built With
-*HTML
-*CSS
-*JavaScript
-*Phaser
 
 All art assets are from [OpenGameArt.org](https://opengameart.org)  
 All sound effects are from [FreeSound.org](https://freesound.org/)  
