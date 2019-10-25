@@ -96,7 +96,8 @@ body {
         text-align: center;
         background: black;
         height: 75px;
-        width: 100%;
+        width: 50%;
+        line-height: 1.5em;
         color: white;
         font-family: 'Press Start 2P', cursive;
         font-size: 20px;
@@ -104,13 +105,13 @@ body {
     .outside-game{
       margin: auto;
       position: absolute;
-      padding-left: 20%;
+      padding-left: 40%;
       width: 42%;
       background: black;
     }
     .character-image{
         position: absolute;
-        right: 70%;
+        right: 57%;
         margin-top: 8%;
         height: 300px;
         width: 200px;
@@ -129,7 +130,7 @@ body {
     }
     .highscore-div{
         position: absolute;
-        padding-left: 38%;
+        padding-left: 32%;
         bottom: 20%;
     }
     .highscore{
@@ -141,7 +142,7 @@ body {
 
     .player-image{
         position: absolute;
-        left: 70%;
+        left: 80%;
         margin-top: 8%;
         height: 300px;
         width: 200px;

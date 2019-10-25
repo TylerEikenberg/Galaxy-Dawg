@@ -236,8 +236,6 @@ let enemyXSpawn = 200;
 let ENEMY_X = 0;
 let spawnSpecialEnemy = false;
 function deployEnemyShips() {
-  //   const MIN_ENEMY_SPACING = 300;
-  //   const MAX_ENEMY_SPACING = 500;
   let ENEMY_SPEED = 300;
 
   let enemy = enemies.getFirstExists(false);
@@ -246,9 +244,7 @@ function deployEnemyShips() {
     enemy.body.velocity.x = ENEMY_X;
     enemy.body.velocity.y = ENEMY_SPEED;
     enemy.body.drag.x = 0;
-    // enemy.update = function() {
-    //   enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
-    // };
+
     if (switchXSpawn === 0 && switchToNewPattern < 10) {
       spawnSpecialEnemy = false;
       game.time.events.add(300, function() {
@@ -328,10 +324,10 @@ function deploySpecialEnemy() {
         } else if (specialEnemyXSpawn === 100) {
           specialEnemyXSpawn = 300;
         } else if (specialEnemyXSpawn === 300) {
-          switchToNewPattern = 0;
-          enemyXSpawn = 200;
+          //   switchToNewPattern = 0;
+          //   enemyXSpawn = 200;
           specialEnemyXSpawn = 200;
-          specialCount = 0;
+          //   specialCount = 0;
           //   deploySpecialEnemy();
           setInterval(function() {
             deployEnemyShips();
@@ -339,7 +335,6 @@ function deploySpecialEnemy() {
         }
       });
     }
-    //   specialEnemy.scale.set(-0.1);
   }
 }
 
